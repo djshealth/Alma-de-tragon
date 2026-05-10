@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para ti, Mami ❤️</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Anton&family=Poppins:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap');
+
+  :root {
+    --amarillo: #F2B705;
+    --amarillo-claro: #FDD85D;
+    --granate: #7B1A28;
+    --granate-oscuro: #4A0D18;
+    --crema: #FBF3D0;
+    --blanco: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--amarillo);
+    overflow-x: hidden;
+    color: var(--granate-oscuro);
+  }
+
+  /* ── PÉTALOS DE ROSA ── */
+  .petals-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .petal {
+    position: absolute;
+    top: -80px;
+    width: 18px;
+    height: 22px;
+    border-radius: 50% 0 50% 0;
+    opacity: 0;
+    animation: petalFall linear infinite;
+  }
+  @keyframes petalFall {
+    0%   { transform: translateY(0) translateX(0) rotate(0deg) scale(1);   opacity: 0; }
+    5%   { opacity: 0.85; }
+    85%  { opacity: 0.7; }
+    100% { transform: translateY(110vh) translateX(60px) rotate(400deg) scale(0.6); opacity: 0; }
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 20px 80px;
+    background: var(--amarillo);
+    z-index: 1;
+  }
+
+  .photo-frame {
+    width: min(85vw, 460px);
+    border-radius: 20px;
+    border: 4px solid var(--granate);
+    overflow: hidden;
+    margin-bottom: 36px;
+    cursor: pointer;
+    transition: transform 0.25s;
+    background: var(--crema);
+    animation: fadeUp 0.9s ease 0.2s both;
+  }
+  .photo-frame:hover {
+    transform: scale(1.02);
+  }
+  .photo-frame img { width: 100%; height: auto; display: block; }
+
+  .hero-sub {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    color: var(--granate);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-weight: 700;
+    background: var(--blanco);
+    padding: 6px 20px;
+    border-radius: 100px;
+    margin-bottom: 16px;
+    animation: fadeUp 0.9s ease 0.4s both;
+  }
+  .hero-title {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(3rem, 9vw, 6rem);
+    color: var(--granate);
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 16px;
+    animation: fadeUp 0.9s ease 0.5s both;
+    text-shadow: 4px 4px 0 var(--granate-oscuro);
+  }
+  .hero-title em {
+    font-style: normal;
+    color: var(--blanco);
+    -webkit-text-stroke: 2px var(--granate);
+  }
+  .hero-date {
+    margin-top: 12px;
+    color: var(--granate);
+    font-size: 0.9rem;
+    font-weight: 600;
+    opacity: 0.7;
+    animation: fadeUp 0.9s ease 0.8s both;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    color: var(--granate);
+    font-size: 0.8rem;
+    font-weight: 600;
+    animation: bounce 2s infinite;
+  }
+  .scroll-hint span { font-size: 1.3rem; }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(7px); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECCIONES ── */
+  .section {
+    position: relative;
+    z-index: 1;
+    padding: 80px 20px;
+  }
+
+  .section-title {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(2.2rem, 6vw, 3.6rem);
+    color: var(--granate);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: 10px;
+    text-shadow: 3px 3px 0 rgba(74,13,24,0.2);
+  }
+  .section-title em {
+    font-style: normal;
+    color: var(--blanco);
+    -webkit-text-stroke: 2px var(--granate);
+  }
+  .section-line {
+    width: 70px;
+    height: 4px;
+    background: var(--granate);
+    border-radius: 4px;
+    margin: 0 auto 50px;
+  }
+
+  /* ── GALERÍA ── */
+  .gallery { background: var(--blanco); }
+  .gallery .section-title { color: var(--granate); }
+  .gallery .section-line { background: var(--granate); }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .gallery-item {
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.25s, box-shadow 0.25s;
+    background: var(--crema);
+    position: relative;
+    border: 4px solid var(--granate);
+    box-shadow: 6px 6px 0 var(--granate-oscuro);
+  }
+  .gallery-item:hover { transform: translate(-3px,-3px); box-shadow: 9px 9px 0 var(--granate-oscuro); }
+  .gallery-item img { width: 100%; height: auto; display: block; }
+  .gallery-label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: var(--granate);
+    color: var(--amarillo);
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .gallery-item:hover .gallery-label { opacity: 1; }
+
+  /* ── ADMIRO ── */
+  .admiro { background: var(--amarillo); }
+  .admiro-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    max-width: 1020px;
+    margin: 0 auto;
+  }
+  .admiro-card {
+    background: var(--blanco);
+    border-radius: 16px;
+    padding: 26px 22px;
+    border: 3px solid var(--granate);
+    box-shadow: 5px 5px 0 var(--granate-oscuro);
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  .admiro-card.visible { opacity: 1; transform: translateY(0); transition: opacity 0.55s ease, transform 0.55s ease, box-shadow 0.2s; }
+  .admiro-card:hover { transform: translate(-3px,-3px); box-shadow: 8px 8px 0 var(--granate-oscuro); }
+  .admiro-num {
+    font-family: 'Anton', sans-serif;
+    font-size: 2.6rem;
+    color: var(--amarillo-claro);
+    -webkit-text-stroke: 2px var(--granate);
+    line-height: 1;
+    min-width: 40px;
+  }
+  .admiro-text h3 {
+    font-family: 'Anton', sans-serif;
+    font-size: 1.15rem;
+    color: var(--granate);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .admiro-text p {
+    font-size: 0.88rem;
+    color: #5c2030;
+    line-height: 1.65;
+  }
+
+  /* ── LLEVO ── */
+  .llevo { background: var(--granate); }
+  .llevo .section-title { color: var(--amarillo); text-shadow: 3px 3px 0 var(--granate-oscuro); }
+  .llevo .section-title em { color: var(--blanco); -webkit-text-stroke: 2px var(--amarillo); }
+  .llevo .section-line { background: var(--amarillo); }
+  .llevo-intro {
+    text-align: center;
+    color: var(--amarillo-claro);
+    max-width: 600px;
+    margin: -30px auto 44px;
+    font-style: italic;
+    line-height: 1.7;
+    font-size: 0.95rem;
+  }
+  .llevo-list {
+    max-width: 680px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .llevo-item {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    background: rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 20px 22px;
+    border: 2px solid rgba(242,183,5,0.35);
+    transition: background 0.25s, transform 0.25s;
+    opacity: 0;
+    transform: translateX(-28px);
+  }
+  .llevo-item.visible { opacity: 1; transform: translateX(0); transition: opacity 0.65s ease, transform 0.65s ease, background 0.25s; }
+  .llevo-item:hover { background: rgba(242,183,5,0.12); transform: translateX(5px); }
+  .llevo-icon { font-size: 2rem; min-width: 40px; text-align: center; }
+  .llevo-text h3 { color: var(--amarillo); font-family: 'Anton', sans-serif; font-size: 1.05rem; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 4px; }
+  .llevo-text p { color: rgba(253,216,93,0.85); font-size: 0.88rem; line-height: 1.6; }
+
+  .llevo-subseccion {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    max-width: 680px;
+    margin: 0 auto 24px;
+  }
+  .llevo-avatar {
+    font-size: 2.4rem;
+    background: rgba(242,183,5,0.15);
+    border-radius: 50%;
+    width: 60px; height: 60px;
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid rgba(242,183,5,0.5);
+    flex-shrink: 0;
+  }
+  .llevo-nombre {
+    font-family: 'Anton', sans-serif;
+    font-size: 1.4rem;
+    color: var(--amarillo);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 0 var(--granate-oscuro);
+  }
+  .hijo-foto {
+    display: block;
+    width: min(85vw, 420px);
+    border-radius: 16px;
+    overflow: hidden;
+    margin: 0 auto 28px;
+    border: 4px solid var(--amarillo);
+    box-shadow: 8px 8px 0 var(--granate-oscuro);
+    cursor: pointer;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .hijo-foto:hover {
+    transform: translate(-4px,-4px);
+    box-shadow: 12px 12px 0 var(--granate-oscuro);
+  }
+  .hijo-foto img { width: 100%; height: auto; display: block; }
+  .berlin-item {
+    border-color: rgba(242,183,5,0.55) !important;
+    background: rgba(242,183,5,0.1) !important;
+  }
+  .berlin-item:hover { background: rgba(242,183,5,0.2) !important; }
+
+  /* ── CIERRE ── */
+  .cierre {
+    background: var(--amarillo);
+    text-align: center;
+    padding: 90px 20px;
+    position: relative;
+    z-index: 1;
+  }
+  .heart-big {
+    font-size: 5rem;
+    animation: heartbeat 1.4s ease-in-out infinite;
+    display: block;
+    margin-bottom: 24px;
+  }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    14%  { transform: scale(1.15); }
+    28%  { transform: scale(1); }
+    42%  { transform: scale(1.1); }
+    56%  { transform: scale(1); }
+  }
+  .cierre-quote {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(1.4rem, 4vw, 2.2rem);
+    color: var(--granate);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    max-width: 660px;
+    margin: 0 auto 28px;
+    line-height: 1.3;
+    text-shadow: 3px 3px 0 rgba(74,13,24,0.18);
+  }
+  .cierre-firma {
+    display: inline-block;
+    background: var(--granate);
+    color: var(--amarillo);
+    font-family: 'Anton', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 12px 32px;
+    border-radius: 100px;
+    margin-top: 8px;
+  }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(74,13,24,0.92);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 12px;
+    border: 4px solid var(--amarillo);
+    box-shadow: 0 20px 80px rgba(0,0,0,0.6);
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 20px; right: 28px;
+    font-size: 2.5rem;
+    color: var(--amarillo);
+    cursor: pointer;
+    line-height: 1;
+    font-weight: 700;
+  }
+
+  /* ── RESPONSIVO ── */
+  @media (max-width: 600px) {
+    .admiro-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- PÉTALOS -->
+<div class="petals-bg" id="petals"></div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <span class="lightbox-close" onclick="closeLightbox()">×</span>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+  <div class="photo-frame" id="heroPhoto" onclick="openLightbox(this.querySelector('img'))">
+    <img src="AA637855-468A-4153-8DF7-AD44F2842D3B.PNG" alt="Mi mami">
+  </div>
+
+  <div class="hero-sub">Feliz Día de la Madre</div>
+  <h1 class="hero-title">Para ti, Mamita,<br><em style="font-style:normal;font-size:0.85em;">tus 2 cachorros y medio</em></h1>
+  <p class="hero-date">10 de mayo de 2026 · Con amor desde lejos 🌍</p>
+
+  <div class="scroll-hint">
+    <span>↓</span>
+    Descubre tu carta
+  </div>
+</section>
+
+<!-- ══════════ GALERÍA ══════════ -->
+<section class="section gallery">
+  <h2 class="section-title">Momentos que <em>atesoro</em></h2>
+  <div class="section-line"></div>
+  <div class="gallery-grid" id="galleryGrid">
+    <div class="gallery-item">
+      <img src="IMG_7731.JPG" alt="Momento especial">
+      <div class="gallery-label">Recuerdo especial ❤️</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img_2224.jpg" alt="Momento especial">
+      <div class="gallery-label">Recuerdo especial ❤️</div>
+    </div>
+    <div class="gallery-item">
+      <img src="Alan.jpg" alt="Alan">
+      <div class="gallery-label">Alan 🌟</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img_3011.jpg" alt="Momento especial">
+      <div class="gallery-label">Recuerdo especial ❤️</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img_3133.jpg" alt="Momento especial">
+      <div class="gallery-label">Recuerdo especial ❤️</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img_2117.jpg" alt="Momento especial">
+      <div class="gallery-label">Recuerdo especial ❤️</div>
+    </div>
+    <div class="gallery-item">
+      <img src="IMG_7921.JPG" alt="Momento especial">
+      <div class="gallery-label">Recuerdo especial ❤️</div>
+    </div>
+    <div class="gallery-item">
+      <img src="perro 1.JPG" alt="Berlín 🐾">
+      <div class="gallery-label">Berlín 🐾</div>
+    </div>
+    <div class="gallery-item">
+      <img src="Mateo.jpg" alt="Mateo">
+      <div class="gallery-label">Mateo 🌟</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 10 COSAS QUE ADMIRO ══════════ -->
+<section class="section admiro">
+  <h2 class="section-title">Las <em>10 cosas</em> que te hacen increíble</h2>
+  <div class="section-line"></div>
+  <div class="admiro-grid" id="admiroGrid">
+
+    <div class="admiro-card">
+      <div class="admiro-num">01</div>
+      <div class="admiro-text">
+        <h3>Tu fortaleza</h3>
+        <p>Nunca te vi rendirte, aunque las cosas se pusieran difíciles. Siempre encontraste la manera de seguir adelante.</p>
+      </div>
+    </div>
+
+    <div class="admiro-card">
+      <div class="admiro-num">02</div>
+      <div class="admiro-text">
+        <h3>Tu amor con disciplina</h3>
+        <p>Siempre nos diste todo tu amor, pero con disciplina. Eso nos formó de verdad. Eso ni tiene precio.</p>
+      </div>
+    </div>
+
+    <div class="admiro-card">
+      <div class="admiro-num">03</div>
+      <div class="admiro-text">
+        <h3>Tu entrega total</h3>
+        <p>Siempre nos diste todo de ti. Tu corazón no tuvo límites. Nunca guardaste nada para después cuando se trataba de nosotros.</p>
+      </div>
+    </div>
+
+    <div class="admiro-card">
+      <div class="admiro-num">04</div>
+      <div class="admiro-text">
+        <h3>Tu forma de educarnos</h3>
+        <p>Tu manera de educarnos sigue conmigo con el Maty y el Berlín cada día. Lo que sembraste en nosotros ya está sembrándose en la siguiente generación.</p>
+      </div>
+    </div>
+
+    <div class="admiro-card">
+      <div class="admiro-num">05</div>
+      <div class="admiro-text">
+        <h3>Tu alegría</h3>
+        <p>Tu risa es una de las cosas más bonitas del mundo. Iluminas cualquier cuarto en el que entras.</p>
+      </div>
+    </div>
+
+    <div class="admiro-card">
+      <div class="admiro-num">06</div>
+      <div class="admiro-text">
+        <h3>Tu fe en Diosito</h3>
+        <p>Creer en Diosito con todo tu ser, en las buenas y en las malas, sin dudar. Esa fe nos protegió, nos guió y sigue siendo el ancla de esta familia.</p>
+      </div>
+    </div>
+
+    <div class="admiro-card">
+      <div class="admiro-num">07</div>
+      <div class="admiro-text">
+        <h3>Tu legado</h3>
+        <p>El trabajo más difícil y más valioso lo hiciste de manera sobresaliente: nosotros. Lo que tú hiciste no fue quedarse en casa — fue dejar un legado para las próximas generaciones.</p>
+      </div>
+    </div>
+
+    <div class="admiro-card">
+      <div class="admiro-num">08</div>
+      <div class="admiro-text">
+        <h3>Tu humildad</h3>
+        <p>Siendo tan grande, nunca lo presumiste. Eso me enseñó que los verdaderos valores no necesitan aplausos.</p>
+      </div>
+    </div>
+
+    <div class="admiro-card">
+      <div class="admiro-num">09</div>
+      <div class="admiro-text">
+        <h3>Tu paciencia</h3>
+        <p>Tu paciencia con todos en la casa, Mami... no sé cómo lo hiciste. Pero lo hiciste, siempre, sin perder la calma ni el amor.</p>
+      </div>
+    </div>
+
+    <div class="admiro-card">
+      <div class="admiro-num">10</div>
+      <div class="admiro-text">
+        <h3>Tú, simplemente tú</h3>
+        <p>No hay una sola cosa: es todo lo que eres, junto. Tener una mamá como tú es el regalo más grande de la vida. Tus 2 hijos y medio somos muy bendecidos de tenerte. 🙏</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ LO QUE LLEVAMOS ══════════ -->
+<section class="section llevo">
+  <h2 class="section-title">Lo que siempre <em>llevamos</em> de ti</h2>
+  <div class="section-line"></div>
+  <p class="llevo-intro">Aunque la distancia nos separe, hay cosas tuyas que viajan con nosotros a donde vamos y no caben en ninguna maleta.</p>
+
+  <!-- ── ALAN ── -->
+  <div class="llevo-subseccion">
+    <div class="llevo-avatar">👦</div>
+    <h3 class="llevo-nombre">Lo que Alan se lleva de ti siempre</h3>
+  </div>
+  <div class="hijo-foto" onclick="openLightbox(this.querySelector('img'))">
+    <img src="Alan.jpg" alt="Alan">
+  </div>
+  <div class="llevo-list" id="llevoAlan">
+    <div class="llevo-item">
+      <div class="llevo-icon">❤️</div>
+      <div class="llevo-text">
+        <h3>Tu amor por la familia</h3>
+        <p>Me enseñaste que la familia va primero, siempre. Eso lo cargo a donde voy.</p>
+      </div>
+    </div>
+    <div class="llevo-item">
+      <div class="llevo-icon">💯</div>
+      <div class="llevo-text">
+        <h3>Tu entrega al 100%</h3>
+        <p>Nunca te vi hacer algo a medias. Eso lo aprendí de ti y es lo que intento aplicar en todo lo que hago.</p>
+      </div>
+    </div>
+    <div class="llevo-item">
+      <div class="llevo-icon">🛡️</div>
+      <div class="llevo-text">
+        <h3>Tu firmeza y tu presencia</h3>
+        <p>Siempre estuviste pendiente de mí, firme, sin dudar. Eso me dio seguridad para enfrentar el mundo.</p>
+      </div>
+    </div>
+    <div class="llevo-item">
+      <div class="llevo-icon">🌱</div>
+      <div class="llevo-text">
+        <h3>Ser mejor que la generación anterior</h3>
+        <p>Me enseñaste a crecer, a evolucionar, a no conformarme. A ser siempre una mejor versión que la que vino antes.</p>
+      </div>
+    </div>
+    <div class="llevo-item">
+      <div class="llevo-icon">☀️</div>
+      <div class="llevo-text">
+        <h3>Tu positivismo</h3>
+        <p>Nunca te escuché quejarte. Esa actitud ante la vida es una de las cosas más grandes que me dejaste.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MATEO ── -->
+  <div class="llevo-subseccion" style="margin-top: 60px;">
+    <div class="llevo-avatar">👶</div>
+    <h3 class="llevo-nombre">Lo que Mateo se lleva de ti siempre</h3>
+  </div>
+  <div class="hijo-foto" onclick="openLightbox(this.querySelector('img'))">
+    <img src="Mateo.jpg" alt="Mateo">
+  </div>
+  <div class="llevo-list" id="llevoMateo">
+    <div class="llevo-item">
+      <div class="llevo-icon">🎯</div>
+      <div class="llevo-text">
+        <h3>Las prioridades en la vida</h3>
+        <p>Me enseñaste a saber qué va primero. Eso no lo enseñan en ningún libro — lo aprendí viéndote a ti.</p>
+      </div>
+    </div>
+    <div class="llevo-item">
+      <div class="llevo-icon">🏠</div>
+      <div class="llevo-text">
+        <h3>La familia es lo más importante</h3>
+        <p>No importa dónde esté ni qué pase — la familia siempre es el centro. Tú me lo mostraste con hechos.</p>
+      </div>
+    </div>
+    <div class="llevo-item">
+      <div class="llevo-icon">💛</div>
+      <div class="llevo-text">
+        <h3>El amor incondicional</h3>
+        <p>Me enseñaste que el amor de verdad no espera nada a cambio. Se da y punto. Eso lo llevo siempre.</p>
+      </div>
+    </div>
+    <div class="llevo-item">
+      <div class="llevo-icon">🗣️</div>
+      <div class="llevo-text">
+        <h3>Todo se puede solucionar hablando</h3>
+        <p>Me enseñaste que la conversación es más fuerte que cualquier problema. Siempre hay una salida si se habla.</p>
+      </div>
+    </div>
+    <div class="llevo-item">
+      <div class="llevo-icon">🤝</div>
+      <div class="llevo-text">
+        <h3>Nunca estoy solo</h3>
+        <p>Sin importar la distancia, sé que estás ahí. Eso me da paz y fuerza todos los días.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── BERLÍN (el perro) ── -->
+  <div class="llevo-subseccion" style="margin-top: 60px;">
+    <div class="llevo-avatar">🐶</div>
+    <h3 class="llevo-nombre">Lo que Berlín también quiere decirte</h3>
+  </div>
+  <div class="hijo-foto" onclick="openLightbox(this.querySelector('img'))">
+    <img src="Berlin.jpg" alt="Berlín">
+  </div>
+  <div class="llevo-list" id="llevoBerlin">
+    <div class="llevo-item berlin-item">
+      <div class="llevo-icon">🥩</div>
+      <div class="llevo-text">
+        <h3>Siempre me das carnitas</h3>
+        <p>Humanita, no hay nadie en el mundo que me mime como tú. Mis carnitas favoritas, siempre. Gracias. Guau.</p>
+      </div>
+    </div>
+    <div class="llevo-item berlin-item">
+      <div class="llevo-icon">🐾</div>
+      <div class="llevo-text">
+        <h3>Siempre me cuidas</h3>
+        <p>Me siento el perro más seguro del mundo cuando estás tú. Me cuidas como si fuera tu propio cachorro.</p>
+      </div>
+    </div>
+    <div class="llevo-item berlin-item">
+      <div class="llevo-icon">🌳</div>
+      <div class="llevo-text">
+        <h3>Me llevas al parque</h3>
+        <p>Humanita, eso me encanta. El parque es lo mejor del mundo y tú me lo llevas. ¡Eres la mejor! 🐕</p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════ CIERRE ══════════ -->
+<section class="cierre">
+  <span class="heart-big">❤️</span>
+  <p class="cierre-quote">
+    Tienes que saber que siempre te llevamos con nosotros<br>en cada paso que damos.
+  </p>
+  <br>
+  <p class="cierre-firma">Te amamos mucho, Mamita 🌹<br>ALAN, MATEO Y BERLÍN 🐾</p>
+  <br>
+  <p style="color:#bbb; font-size:0.85rem; margin-top:20px;">Feliz Día de la Madre · Mayo 2026</p>
+</section>
+
+<script>
+  // ── PÉTALOS DE ROSA ──
+  const petalColors = [
+    '#FFFFFF','#FDD85D','#F2B705','#FFFFFF',
+    '#7B1A28','#FFFFFF','#FDD85D','#FFFFFF'
+  ];
+  const container = document.getElementById('petals');
+
+  // Crear pétalos como divs con forma de pétalo CSS
+  for (let i = 0; i < 38; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    const color = petalColors[Math.floor(Math.random() * petalColors.length)];
+    const size = 10 + Math.random() * 18;
+    const skew = Math.random() > 0.5 ? 'rotate(0deg)' : 'rotate(90deg)';
+    p.style.left = Math.random() * 105 + 'vw';
+    p.style.width = size + 'px';
+    p.style.height = (size * 1.4) + 'px';
+    p.style.background = color;
+    p.style.opacity = '0';
+    p.style.borderRadius = '50% 0 50% 0';
+    p.style.transform = skew;
+    p.style.animationDuration = (7 + Math.random() * 9) + 's';
+    p.style.animationDelay = (Math.random() * 14) + 's';
+    // Movimiento lateral suave con pseudo-animación via filter
+    p.style.filter = `drop-shadow(0 2px 4px rgba(74,13,24,0.4))`;
+    container.appendChild(p);
+  }
+
+  // ── SCROLL REVEAL ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        const delay = (entry.target.dataset.delay || 0);
+        setTimeout(() => entry.target.classList.add('visible'), delay);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.admiro-card').forEach((el, i) => {
+    el.dataset.delay = i * 80;
+    observer.observe(el);
+  });
+  document.querySelectorAll('.llevo-item').forEach((el, i) => {
+    el.dataset.delay = i * 100;
+    observer.observe(el);
+  });
+
+  // ── LIGHTBOX ──
+  function openLightbox(img) {
+    if (!img || !img.src || img.src === window.location.href) return;
+    document.getElementById('lightbox-img').src = img.src;
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+  }
+  document.getElementById('lightbox').addEventListener('click', function(e) {
+    if (e.target === this) closeLightbox();
+  });
+
+  // Galería lightbox
+  document.querySelectorAll('.gallery-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const img = item.querySelector('img');
+      if (img) openLightbox(img);
+    });
+  });
+
+  // ── SERPENTINAS: canvas para rectángulos, DOM para emojis ──
+  const EMOJIS = ['🎉','🎊','🌟','🎈','✨','🥳','🎀'];
+  const COLORES = ['#F2B705','#7B1A28','#FFFFFF','#FDD85D','#4A0D18','#FBF3D0'];
+
+  // Canvas solo para partículas rectangulares (muy rápido)
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;';
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  const particles = [];
+  let rafId = null;
+
+  function crearParticula(x, y) {
+    return {
+      x, y,
+      vx: (Math.random() - 0.5) * 14,
+      vy: -(Math.random() * 14 + 5),
+      rot: Math.random() * 360,
+      rotV: (Math.random() - 0.5) * 10,
+      w: Math.random() * 12 + 5,
+      h: Math.random() * 6 + 3,
+      color: COLORES[Math.floor(Math.random() * COLORES.length)],
+      alpha: 1,
+      gravity: 0.4
+    };
+  }
+
+  function animarCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.vy += p.gravity;
+      p.x += p.vx; p.y += p.vy; p.rot += p.rotV;
+      p.alpha -= 0.006;
+      if (p.alpha <= 0 || p.y > canvas.height + 20) { particles.splice(i, 1); continue; }
+      ctx.save();
+      ctx.globalAlpha = p.alpha;
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+    }
+    if (particles.length > 0) { rafId = requestAnimationFrame(animarCanvas); }
+    else { ctx.clearRect(0, 0, canvas.width, canvas.height); rafId = null; }
+  }
+
+  // Emojis como elementos DOM con animación CSS (GPU, sin lag)
+  const emojiLayer = document.createElement('div');
+  emojiLayer.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:hidden;';
+  document.body.appendChild(emojiLayer);
+
+  const styleEl = document.createElement('style');
+  styleEl.textContent = `
+    .emoji-fly {
+      position: absolute;
+      font-size: 1.8rem;
+      will-change: transform, opacity;
+      animation: emojiDrop linear forwards;
+      pointer-events: none;
+    }
+    @keyframes emojiDrop {
+      0%   { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+      70%  { opacity: 1; }
+      100% { transform: translateY(105vh) rotate(720deg) scale(0.7); opacity: 0; }
+    }
+  `;
+  document.head.appendChild(styleEl);
+
+  function lanzarEmojis(cx, cy) {
+    for (let i = 0; i < 7; i++) {
+      const el = document.createElement('span');
+      el.className = 'emoji-fly';
+      el.textContent = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+      const offsetX = (Math.random() - 0.5) * 300;
+      el.style.left = (cx + offsetX) + 'px';
+      el.style.top = cy + 'px';
+      el.style.fontSize = (1.2 + Math.random() * 1.4) + 'rem';
+      el.style.animationDuration = (2.5 + Math.random() * 2) + 's';
+      el.style.animationDelay = (Math.random() * 0.4) + 's';
+      emojiLayer.appendChild(el);
+      el.addEventListener('animationend', () => el.remove());
+    }
+  }
+
+  function lanzarExplosion() {
+    const W = window.innerWidth, H = window.innerHeight;
+    const puntos = [
+      { x: W * 0.15, y: H * 0.3 },
+      { x: W * 0.85, y: H * 0.3 },
+      { x: W * 0.5,  y: H * 0.15 }
+    ];
+    puntos.forEach(p => {
+      for (let i = 0; i < 60; i++) particles.push(crearParticula(p.x, p.y));
+      lanzarEmojis(p.x, p.y);
+    });
+    if (!rafId) rafId = requestAnimationFrame(animarCanvas);
+  }
+
+  window.addEventListener('load', () => {
+    setTimeout(() => lanzarExplosion(), 350);
+    setTimeout(() => lanzarExplosion(), 1100);
+    setTimeout(() => lanzarExplosion(), 2000);
+    setTimeout(() => lanzarExplosion(), 3200);
+    setTimeout(() => lanzarExplosion(), 5000);
+    setTimeout(() => lanzarExplosion(), 8000);
+  });
+</script>
+</body>
+</html>
